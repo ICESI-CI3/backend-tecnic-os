@@ -1,0 +1,12 @@
+import { IsString } from "class-validator";
+
+export class CreateTechnicianDto {
+    @IsString()
+    tags: string;
+  
+    @IsString()
+    description: string;
+
+    @IsString()
+    userId: string; 
+}
