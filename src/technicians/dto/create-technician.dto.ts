@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsArray, IsString, isArray } from "class-validator";
 
 export class CreateTechnicianDto {
     @IsString()

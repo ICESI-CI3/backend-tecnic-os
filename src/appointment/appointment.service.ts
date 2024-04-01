@@ -4,27 +4,34 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TechniciansService } from 'src/technicians/technicians.service';
+import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/entities/user.entity';
+import { error } from 'console';
+
 
 @Injectable()
 export class AppointmentService {
   constructor(
     @InjectRepository(Appointment) 
     private readonly appointmentRepository: Repository<Appointment>, 
-    private readonly techniciansService: TechniciansService
+    private readonly usersService: UsersService
     )
   {}
-  create(createAppointmentDto: CreateAppointmentDto, techId: string) {
-    const technician = this.techniciansService.findOneByUserId(techId);
-    if(technician){
-      const appointment={
-        ...createAppointmentDto, 
-        technicianId: techId
-      }
-      return this.appointmentRepository.save(appointment)
-    } 
-
-    throw new BadRequestException('User already exists');
+  create(createAppointmentDto: CreateAppointmentDto, technicianId: string) {
+    const userPromise=this.usersService.findOneByID(createAppointmentDto.userId);
+    const technicianPromise=this.usersService.findOneByID(technicianId);
+    userPromise.then((interUser: User) => {
+      technicianPromise.then((interTechnician: User) => {
+        const appointment={
+          ...createAppointmentDto, 
+          user: interUser, 
+          technician: interTechnician
+        }
+        return this.appointmentRepository.save(appointment);
+      }).catch((error) => { });
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   findAll() {

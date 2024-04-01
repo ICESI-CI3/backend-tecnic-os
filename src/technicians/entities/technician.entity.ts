@@ -4,16 +4,13 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn, Primar
 @Entity()
 export class Technician extends BaseEntity {
     @PrimaryGeneratedColumn()
-    technicianId: number;
+    id: number;
 
     @Column({ unique: true, nullable: false})
     description: string;
 
     @Column({nullable: false})
     tags: string;
-
-    @Column()
-    userId: string;
 
     @OneToOne(() => User) 
     @JoinColumn()

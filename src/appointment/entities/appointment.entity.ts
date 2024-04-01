@@ -7,18 +7,18 @@ export class Appointment {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @Column({nullable: false})
+    @Column({default: ""})
     description: string;
 
-    @Column({nullable: false})
-    technicianId: string;
+    @Column({ type: 'date' })
+    date: string;
 
-    @Column({nullable: false})
-    userId: string;
+    @Column({ type: 'time' })
+    initTime: string;
 
-    @OneToOne(() => Technician) 
+    @OneToOne(() => User) 
     @JoinColumn()
-    technician: Technician;
+    technician: User;
 
     @OneToOne(() => User) 
     @JoinColumn()

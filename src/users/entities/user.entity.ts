@@ -18,6 +18,9 @@ export class User {
     @Column({ default: 'user' })
     role: string
 
+    @Column({default: -1})
+    rating: number;
+
     @DeleteDateColumn()
     deletedAt: Date;
 }
