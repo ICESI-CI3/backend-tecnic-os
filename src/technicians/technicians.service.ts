@@ -19,7 +19,7 @@ export class TechniciansService {
 
   create(createTechnicianDto: CreateTechnicianDto) {
     const userPromise=this.userService.findOneByID(createTechnicianDto.userId);
-    
+
     userPromise.then((interUser: User) => {
       const technician={
         ...createTechnicianDto, 

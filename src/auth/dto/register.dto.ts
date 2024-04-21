@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, Min, MinLength } from 'class-validator';
-
+import { IsEmail, IsString, Min, MinLength, IsIn } from 'class-validator';
+import { ValidRoles } from '../interfaces/valid-roles';
 export class RegisterDto {
   @IsString()
   @MinLength(6)
@@ -17,4 +17,8 @@ export class RegisterDto {
   @IsString()
   @MinLength(6)
   password: string;
+
+  @IsString({ each: true })
+  @IsIn(Object.values(ValidRoles), { each: true })
+  role: string[];
 }

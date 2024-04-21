@@ -5,16 +5,25 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { TechniciansService } from 'src/technicians/technicians.service';
 import { Appointment } from './entities/appointment.entity';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
+import { RoleProtected } from 'src/auth/decorators/role-protected.decorator';
+import { ValidRoles } from 'src/auth/interfaces/valid-roles';
+import { UserRoleGuard } from 'src/auth/guard/user-role.guard';
 
 @Controller('appointment')
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
   @Post('create')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, UserRoleGuard)
+  @RoleProtected(ValidRoles.technician)
   create(@Body() createAppointmentDto: CreateAppointmentDto, @Request() req) {
     const technicianId= req.user.id;
-    return this.appointmentService.create(createAppointmentDto, technicianId);
+    console.log("texto: ", technicianId);
+    return {
+      ok: true,
+      message:  "Works"
+    }
+    //return this.appointmentService.create(createAppointmentDto, technicianId);
   }
 
   @Get()
