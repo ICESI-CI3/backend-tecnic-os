@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { TechniciansService } from './technicians.service';
 import { CreateTechnicianDto } from './dto/create-technician.dto';
 import { UpdateTechnicianDto } from './dto/update-technician.dto';
@@ -15,7 +25,6 @@ export class TechniciansController {
   create(@Body() createTechnicianDto: CreateTechnicianDto) {
     return this.techniciansService.create(createTechnicianDto);
   }
-  
 
   @Get()
   findAll() {
@@ -28,7 +37,10 @@ export class TechniciansController {
   }
   @RoleProtected(ValidRoles.technician)
   @Patch(':userId')
-  update(@Param('userId') userId: string, @Body() updateTechnicianDto: UpdateTechnicianDto) {
+  update(
+    @Param('userId') userId: string,
+    @Body() updateTechnicianDto: UpdateTechnicianDto,
+  ) {
     return this.techniciansService.update(userId, updateTechnicianDto);
   }
   @RoleProtected(ValidRoles.technician)
