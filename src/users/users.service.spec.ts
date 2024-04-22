@@ -49,24 +49,6 @@ describe('UsersService', () => {
     });
   });
 
-  describe('findOneByEmail', () => {
-    it('should return a user by email', async () => {
-      const email = 'john@example.com';
-      const user: User = {
-        id: '123456', // Puedes proporcionar un ID adecuado aquí
-        name: 'John Doe',
-        email: email,
-        password: 'password123',
-        role: ['user'],
-        rating: 4,
-        deletedAt: null,
-      };
-      jest.spyOn(userRepository, 'findOne').mockResolvedValue(user);
-
-      expect(await service.findOneByEmail(email)).toBe(user);
-    });
-  });
-
   describe('findAll', () => {
     it('should return an array of users', async () => {
       const users: User[] = [

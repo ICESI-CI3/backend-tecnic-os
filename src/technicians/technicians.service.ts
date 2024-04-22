@@ -9,27 +9,38 @@ import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class TechniciansService {
-
   constructor(
-    @InjectRepository(Technician) 
-    private readonly technicianRepository: Repository<Technician>, 
+    @InjectRepository(Technician)
+    private readonly technicianRepository: Repository<Technician>,
     private readonly userService: UsersService,
-    )
-  {}
-  
-  create(createTechnicianDto: CreateTechnicianDto) {
-    const userPromise=this.userService.findOneByID(createTechnicianDto.userId);
+  ) {}
 
-    userPromise.then((interUser: User) => {
-      const technician={
-        ...createTechnicianDto, 
-        user: interUser
+  async create(createTechnicianDto: CreateTechnicianDto): Promise<Technician> {
+    try {
+      // Busca el usuario por ID
+      const user = await this.userService.findOneByID(
+        createTechnicianDto.userId,
+      );
+
+      if (!user) {
+        // Si el usuario no existe, lanza una excepción BadRequestException
+        throw new BadRequestException('No user matches with id');
       }
-      return this.technicianRepository.save(technician);
-    }).catch((error) => {
-      //throw new BadRequestException('No user matches with id');
-      console.log(error);
-    });
+
+      // Crea una instancia de Technician y la guarda en la base de datos
+      const technician = this.technicianRepository.create({
+        ...createTechnicianDto,
+        user: user,
+      });
+
+      return await this.technicianRepository.save(technician);
+    } catch (error) {
+      // Captura cualquier error y relanza la excepción
+      throw new BadRequestException(
+        'Failed to create technician',
+        error.message,
+      );
+    }
   }
 
   findAll() {
@@ -46,7 +57,9 @@ export class TechniciansService {
       }
 
       // Get the technician asynchronously based on the user
-      const technician = await this.technicianRepository.findOne({ where: { user } });
+      const technician = await this.technicianRepository.findOne({
+        where: { user },
+      });
 
       return technician; // Return the found technician or null if not found
     } catch (error) {
@@ -55,19 +68,19 @@ export class TechniciansService {
     }
   }
 
-
-  findOneByID(id: number) { //este metodo es para el id de tecnico, no el id de usuario
-    return this.technicianRepository.findOne({where: {id: id}});
+  findOneByID(id: number) {
+    //este metodo es para el id de tecnico, no el id de usuario
+    return this.technicianRepository.findOne({ where: { id: id } });
   }
 
-  
   async update(userId: string, updateTechnicianDto: UpdateTechnicianDto) {
-    const technician=await this.findOneByUserId(userId);
+    const technician = await this.findOneByUserId(userId);
     Object.assign(technician, updateTechnicianDto);
     return this.technicianRepository.save(technician);
   }
 
-  remove(id: string) { //este metodo es para el id de tecnico, no el id de usuario
+  remove(id: string) {
+    //este metodo es para el id de tecnico, no el id de usuario
     return this.technicianRepository.delete(id);
   }
 }
