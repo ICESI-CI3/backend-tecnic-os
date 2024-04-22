@@ -5,7 +5,7 @@ import { User } from 'src/users/entities/user.entity';
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: process.env.DB_TYPE as any,
   host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT),
+  port: +process.env.DB_PORT,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
@@ -14,7 +14,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   ssl: process.env.DB_SSL === 'true',
   extra: {
     ssl:
-      process.env.POSTGRES_SSL === 'true'
+      process.env.DB_SSL === 'true'
         ? { rejectUnauthorized: false }
         : null,
   },
