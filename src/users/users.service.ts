@@ -21,11 +21,11 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.userRepository.find();
   }
 
   findOneByID(id: string) {
-    return this.userRepository.findOneBy({id});
+    return this.userRepository.findOneBy({ id });
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
@@ -33,6 +33,6 @@ export class UsersService {
   }
 
   remove(id: string) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
   }
 }
