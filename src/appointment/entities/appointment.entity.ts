@@ -1,6 +1,5 @@
-import { Technician } from "src/technicians/entities/technician.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Appointment {
@@ -16,11 +15,11 @@ export class Appointment {
     @Column({ type: 'time' })
     initTime: string;
 
-    @OneToOne(() => User) 
+    @ManyToOne(() => User) 
     @JoinColumn()
     technician: User;
 
-    @OneToOne(() => User) 
+    @ManyToOne(() => User) 
     @JoinColumn()
     user: User;
 }
