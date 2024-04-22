@@ -1,52 +1,64 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { NotFoundException, Injectable } from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
-import { User } from 'src/users/entities/user.entity';
-import { error } from 'console';
 
 
 @Injectable()
 export class AppointmentService {
   constructor(
-    @InjectRepository(Appointment) 
-    private readonly appointmentRepository: Repository<Appointment>, 
+    @InjectRepository(Appointment)
+    private readonly appointmentRepository: Repository<Appointment>,
     private readonly usersService: UsersService
-    )
-  {}
-  create(createAppointmentDto: CreateAppointmentDto, technicianId: string) {
-    const userPromise=this.usersService.findOneByID(createAppointmentDto.userId);
-    const technicianPromise=this.usersService.findOneByID(technicianId);
-    userPromise.then((interUser: User) => {
-      technicianPromise.then((interTechnician: User) => {
-        const appointment={
-          ...createAppointmentDto, 
-          user: interUser, 
-          technician: interTechnician
-        }
-        return this.appointmentRepository.save(appointment);
-      }).catch((error) => { });
-    }).catch((error) => {
-      console.log(error);
-    });
+  ) {}
+
+  async create(createAppointmentDto: CreateAppointmentDto, technicianId: string): Promise<Appointment> {
+    const user = await this.usersService.findOneByID(createAppointmentDto.userId);
+    const technician = await this.usersService.findOneByID(technicianId);
+
+    const appointment = new Appointment();
+    appointment.user = user;
+    appointment.technician = technician;
+    appointment.description = createAppointmentDto.description;
+    appointment.date = createAppointmentDto.date;
+    appointment.initTime = createAppointmentDto.initTime;
+
+    return this.appointmentRepository.save(appointment);
   }
 
-  findAll() {
-    return `This action returns all appointment`;
+  findAll(): Promise<Appointment[]> {
+    return this.appointmentRepository.find({ relations: ['user', 'technician'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
+  async findOne(id: string): Promise<Appointment> {
+    const appointment = await this.appointmentRepository.findOne({where: { id: id }});
+    if (!appointment) {
+      throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
+    return appointment;
   }
 
-  update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return `This action updates a #${id} appointment`;
+  async update(id: string, updateAppointmentDto: UpdateAppointmentDto): Promise<Appointment> {
+    const appointment = await this.findOne(id);
+    if (!appointment) {
+      throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
+
+    appointment.description = updateAppointmentDto.description || appointment.description;
+    appointment.date = updateAppointmentDto.date || appointment.date;
+    appointment.initTime = updateAppointmentDto.initTime || appointment.initTime;
+
+    return this.appointmentRepository.save(appointment);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} appointment`;
+  async remove(id: string): Promise<void> {
+    const result = await this.appointmentRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Appointment with ID ${id} not found`);
+    }
   }
 }
+
