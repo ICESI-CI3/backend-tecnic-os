@@ -5,9 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
-  Request,
-  UseGuards,
+  Delete
 } from '@nestjs/common';
 import { TechniciansService } from './technicians.service';
 import { CreateTechnicianDto } from './dto/create-technician.dto';

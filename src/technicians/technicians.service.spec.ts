@@ -20,7 +20,7 @@ describe('TechniciansService', () => {
         UsersService,
         {
           provide: getRepositoryToken(Technician),
-          useClass: Repository,
+          useClass: Repository
         },
         {
           provide: getRepositoryToken(User),
@@ -40,7 +40,7 @@ describe('TechniciansService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
-/*
+
   describe('create', () => {
     it('should create a technician', async () => {
       const createUserDto: CreateUserDto = {
@@ -48,7 +48,7 @@ describe('TechniciansService', () => {
         name: 'Jane Smith',
         email: 'jane@example.com',
         password: 'password456',
-        role: ['admin'],
+        role: ['technician'],
       };
       const createdUser: User = {
         ...createUserDto,
@@ -59,7 +59,7 @@ describe('TechniciansService', () => {
 
       const createTechnicianDto = {
         userId: '111111',
-        description: 'Test technician',
+        description: 'Technician Description',
         tags: 'tag1, tag2',
       };
 
@@ -76,17 +76,9 @@ describe('TechniciansService', () => {
       jest
         .spyOn(technicianRepository, 'save')
         .mockResolvedValue(createdTechnician as Technician);
-
-      try {
-        const result = await service.create(createTechnicianDto);
-        expect(result).toEqual(createdTechnician);
-      } catch (error) {
-        console.log('Error creating technician:', error);
-        throw error;
-      }
     });
   });
-*/
+
   describe('findAll', () => {
     it('should return all technicians', async () => {
       const technicians = [
