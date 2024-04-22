@@ -33,8 +33,8 @@ export class TechniciansController {
   }
   @RoleProtected(ValidRoles.technician)
   @RoleProtected(ValidRoles.superUser)
-  @Delete(':userId')
-  remove(@Param('userId') userId: string) {
+  @Delete(':id') //este metodo es para el id de tecnico, no el id de usuario
+  remove(@Param('id') userId: string) {
     return this.techniciansService.remove(userId);
   }
 }
