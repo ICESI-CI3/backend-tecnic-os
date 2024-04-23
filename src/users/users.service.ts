@@ -31,4 +31,18 @@ export class UsersService {
   remove(id: string) {
     return this.userRepository.delete(id);
   }
+  
+  async fillUsersWithSeedData(usersData: CreateUserDto[]) {
+
+    const createdUsers = [];
+    for (const userData of usersData) {
+      try {
+        const createdUser = await this.create(userData);
+        createdUsers.push(createdUser);
+      } catch (error) {
+        console.error(`Error creating user: ${userData.name}`, error.message);
+      }
+    }
+    return createdUsers;
+  }
 }

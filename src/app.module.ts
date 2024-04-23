@@ -9,6 +9,7 @@ import { AppointmentModule } from './appointment/appointment.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { TechniciansModule } from './technicians/technicians.module';
 import { ConfigModule } from '@nestjs/config';
+import { SeedModule } from './seed/seed.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     AppointmentModule,
     TechniciansModule,
+    SeedModule
   ],
   controllers: [],
   providers: [],
