@@ -5,6 +5,7 @@ import { AppointmentService } from "src/appointment/appointment.service";
 import { usersSeed } from "./data/users.seed";
 import { techniciansSeed } from "./data/technician.seed";
 import { appointmentsSeed } from "./data/appointment.seed";
+import { superUserSeed } from "./data/super-user.seed";
 
 @Injectable()
 export class SeedService {
@@ -21,8 +22,9 @@ export class SeedService {
         return 'Database populated';
     }
 
-    // This method will be called when the application starts
+    // This method will be called when the application starts. It will create 
+    // the super user if it doesn't exist.
     async onModuleInit() {
-        await this.populateDB();
+        await this.usersService.fillUsersWithSeedData(superUserSeed);
     }
 }
