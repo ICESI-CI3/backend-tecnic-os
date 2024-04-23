@@ -26,11 +26,13 @@ export class TechniciansService {
         throw new BadRequestException('No user matches with id');
       }
 
+
       // Crea una instancia de Technician y la guarda en la base de datos
       const technician = this.technicianRepository.create({
         ...createTechnicianDto,
         user: user,
       });
+
 
       return await this.technicianRepository.save(technician);
     } catch (error) {
@@ -67,7 +69,7 @@ export class TechniciansService {
     }
   }
 
-  findOneByID(id: number) {
+  async findOneByID(id: string) {
     //este metodo es para el id de tecnico, no el id de usuario
     return this.technicianRepository.findOne({ where: { id: id } });
   }
@@ -78,8 +80,20 @@ export class TechniciansService {
     return this.technicianRepository.save(technician);
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     //este metodo es para el id de tecnico, no el id de usuario
     return this.technicianRepository.delete(id);
+  }
+
+  async fillTechniciansWithSeedData(techniciansData: CreateTechnicianDto[] ) {
+    const createdTechnicians = [];
+    for (const technicianData of techniciansData){
+      try{
+        const createdTechnician = await this.create(technicianData);
+        createdTechnicians.push(createdTechnician);
+      }catch (error){
+        console.error(`Error creating user: ${technicianData.userId}`, error.message);
+      }
+    }
   }
 }

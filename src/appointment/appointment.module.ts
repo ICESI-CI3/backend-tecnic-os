@@ -12,5 +12,6 @@ import { UsersModule } from 'src/users/users.module';
   imports: [TechniciansModule, UsersModule, TypeOrmModule.forFeature([Appointment])],
   controllers: [AppointmentController],
   providers: [AppointmentService, TechniciansService, UsersService],
+  exports: [AppointmentService, TypeOrmModule.forFeature([Appointment])],
 })
 export class AppointmentModule {}

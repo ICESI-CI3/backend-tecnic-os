@@ -3,16 +3,23 @@ import * as bcryptjs from 'bcryptjs';
 
 export const usersSeed: CreateUserDto[] = [
     {
-        id: "123456789",
+        id: "111111",
         name: "John Doe",
         email: "john@example.com",
         password: bcryptjs.hashSync("12345678", 10),
         role: ["user"]
       },
       {
-        id: "987654321",
+        id: "222222",
         name: "Jane Smith",
         email: "jane@example.com",
+        password: bcryptjs.hashSync("12345678", 10),
+        role: ["technician"]
+      },
+      {
+        id: "333333",
+        name: "Mike Morgan",
+        email: "mike@example.com",
         password: bcryptjs.hashSync("12345678", 10),
         role: ["technician"]
       }

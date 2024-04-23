@@ -60,5 +60,17 @@ export class AppointmentService {
       throw new NotFoundException(`Appointment with ID ${id} not found`);
     }
   }
+
+  async fillAppointmentsWithSeedData(appointmentsData: any[]) {
+    const createdAppointments = [];
+    for (const appointmentData of appointmentsData) {
+      try{
+        const createdAppointment = await this.create(appointmentData.appointmentDTO, appointmentData.technicianId);
+        createdAppointments.push(createdAppointment);
+      }catch(error){
+        console.error(`Error creating appointment: ${error.message}`);
+      }
+    }
+  }
 }
 

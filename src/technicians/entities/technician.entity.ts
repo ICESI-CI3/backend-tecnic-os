@@ -5,16 +5,16 @@ import {
   Entity,
   JoinColumn,
   OneToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class Technician extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
 
-  @Column({ unique: true, nullable: false })
+  @PrimaryGeneratedColumn()
+  id: string;
+
+  @Column({ nullable: false })
   description: string;
 
   @Column({ nullable: false })
