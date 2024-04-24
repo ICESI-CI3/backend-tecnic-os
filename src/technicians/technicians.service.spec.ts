@@ -67,7 +67,7 @@ describe('TechniciansService', () => {
 
       // Crear un técnico simulado para devolver desde el espionaje
       const createdTechnician: Partial<Technician> = {
-        id: 1, // Añadimos un id ficticio para satisfacer la propiedad requerida
+        id: "1", // Añadimos un id ficticio para satisfacer la propiedad requerida
         ...createTechnicianDto,
         user: createdUser,
       };
@@ -123,7 +123,7 @@ describe('TechniciansService', () => {
 
   describe('findOneByID', () => {
     it('should return a technician by ID', async () => {
-      const technicianId = 1;
+      const technicianId = "1";
       const technician = {
         id: technicianId,
         description: 'Test technician',
@@ -148,7 +148,7 @@ describe('TechniciansService', () => {
         tags: 'newtag1, newtag2',
       };
       const oldTechnician = new Technician(); // Crear una nueva instancia de Technician
-      oldTechnician.id = 1;
+      oldTechnician.id = "1";
       oldTechnician.description = 'Old description';
       oldTechnician.tags = 'oldtag1, oldtag2';
       jest.spyOn(service, 'findOneByUserId').mockResolvedValue(oldTechnician); // Simular la devolución de un objeto Technician
