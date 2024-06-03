@@ -23,4 +23,7 @@ export class Technician extends BaseEntity {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
+
+  @Column({ nullable: false })
+  minimum_fee: number;
 }

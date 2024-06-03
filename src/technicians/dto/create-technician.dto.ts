@@ -1,4 +1,4 @@
-import { IsArray, IsString, isArray } from 'class-validator';
+import { IsArray, IsNumber, IsString, isArray } from 'class-validator';
 
 export class CreateTechnicianDto {
   @IsString()
@@ -9,4 +9,7 @@ export class CreateTechnicianDto {
 
   @IsString()
   userId: string;
+
+  @IsNumber()
+  minimum_fee: number;
 }

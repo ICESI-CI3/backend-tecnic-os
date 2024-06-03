@@ -26,13 +26,13 @@ export class TechniciansService {
         throw new BadRequestException('No user matches with id');
       }
 
+      this.userService.updateRole(user.id, {role: ["technician"]})
 
       // Crea una instancia de Technician y la guarda en la base de datos
       const technician = this.technicianRepository.create({
         ...createTechnicianDto,
         user: user,
       });
-
 
       return await this.technicianRepository.save(technician);
     } catch (error) {

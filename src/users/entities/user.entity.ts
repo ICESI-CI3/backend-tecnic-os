@@ -1,4 +1,4 @@
-import { Column, DeleteDateColumn, Entity } from 'typeorm';
+import { Column, Decimal128, DeleteDateColumn, Entity } from 'typeorm';
 
 @Entity()
 export class User {
@@ -18,8 +18,11 @@ export class User {
     @Column('text',{array: true})
     role: string[];
 
-    @Column({default: -1})
+    @Column({type: 'decimal', default: -1})
     rating: number;
+
+    @Column({default: 0})
+    rates_count: number;
 
     @DeleteDateColumn()
     deletedAt: Date;
