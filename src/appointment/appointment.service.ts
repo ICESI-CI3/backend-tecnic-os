@@ -50,6 +50,7 @@ export class AppointmentService {
     appointment.description = updateAppointmentDto.description || appointment.description;
     appointment.date = updateAppointmentDto.date || appointment.date;
     appointment.initTime = updateAppointmentDto.initTime || appointment.initTime;
+    appointment.status = updateAppointmentDto.status || appointment.status
 
     return this.appointmentRepository.save(appointment);
   }

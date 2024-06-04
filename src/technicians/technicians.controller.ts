@@ -33,6 +33,13 @@ export class TechniciansController {
   findOne(@Param('userId') userId: string) {
     return this.techniciansService.findOneByUserId(userId);
   }
+
+  @Get('user/:id')
+  findUserByTechnicianId(@Param('id') id: string) {
+    return this.techniciansService.findUserByTechnicianId(id);
+  }
+
+
   @RoleProtected(ValidRoles.technician)
   @Patch(':userId')
   update(
