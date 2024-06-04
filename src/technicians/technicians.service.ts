@@ -69,6 +69,16 @@ export class TechniciansService {
     }
   }
 
+  async findUserByTechnicianId(technicianId: string) {
+    //este metodo es para el id de tecnico, no el id de usuario
+    const technician = await this.technicianRepository.findOne({
+      where: { id: technicianId },
+      relations: ['user'],
+    });
+    return technician.user;
+  }
+
+
   async findOneByID(id: string) {
     //este metodo es para el id de tecnico, no el id de usuario
     return this.technicianRepository.findOne({ where: { id: id } });
