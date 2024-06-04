@@ -15,9 +15,9 @@ export class AppointmentService {
     private readonly usersService: UsersService
   ) {}
 
-  async create(createAppointmentDto: CreateAppointmentDto, technicianId: string): Promise<Appointment> {
-    const user = await this.usersService.findOneByID(createAppointmentDto.userId);
-    const technician = await this.usersService.findOneByID(technicianId);
+  async create(createAppointmentDto: CreateAppointmentDto, userId: string): Promise<Appointment> {
+    const technician = await this.usersService.findOneByID(createAppointmentDto.technicianId);
+    const user = await this.usersService.findOneByID(userId);
 
     const appointment = new Appointment();
     appointment.user = user;

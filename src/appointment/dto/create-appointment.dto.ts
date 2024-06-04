@@ -2,11 +2,11 @@ import { IsDateString, IsString, Matches, MinLength } from "class-validator";
 
 export class CreateAppointmentDto {
     @IsString()
-    description: string; 
+    description: string;
 
     @IsString()
     @MinLength(6)
-    userId: string;
+    technicianId: string;
 
     @IsDateString()
     date: string;
