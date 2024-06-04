@@ -85,9 +85,10 @@ export class TechniciansService {
   }
 
   async update(userId: string, updateTechnicianDto: UpdateTechnicianDto) {
-    const technician = await this.findOneByUserId(userId);
-    Object.assign(technician, updateTechnicianDto);
-    return this.technicianRepository.save(technician);
+    console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB id", userId)
+    const technician= await this.findOneByUserId(userId)
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", technician)
+    return this.technicianRepository.update(technician.id, updateTechnicianDto);
   }
 
   async remove(id: string) {

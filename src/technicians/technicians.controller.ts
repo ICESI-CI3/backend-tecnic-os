@@ -33,21 +33,24 @@ export class TechniciansController {
   findOne(@Param('userId') userId: string) {
     return this.techniciansService.findOneByUserId(userId);
   }
-
+  
   @Get('user/:id')
   findUserByTechnicianId(@Param('id') id: string) {
     return this.techniciansService.findUserByTechnicianId(id);
   }
 
 
-  @RoleProtected(ValidRoles.technician)
+
   @Patch(':userId')
   update(
     @Param('userId') userId: string,
     @Body() updateTechnicianDto: UpdateTechnicianDto,
   ) {
+    console.log("PRUEBA 10000000:", userId)
     return this.techniciansService.update(userId, updateTechnicianDto);
   }
+
+  
   @RoleProtected(ValidRoles.technician)
   @RoleProtected(ValidRoles.superUser)
   @Delete(':id') //este metodo es para el id de tecnico, no el id de usuario
