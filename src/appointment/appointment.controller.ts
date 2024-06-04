@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
@@ -15,11 +25,10 @@ export class AppointmentController {
   @UseGuards(AuthGuard, UserRoleGuard)
   @RoleProtected(ValidRoles.technician, ValidRoles.superUser)
   create(@Body() createAppointmentDto: CreateAppointmentDto, @Request() req) {
-    const technicianId= req.user.id;
-    return this.appointmentService.create(createAppointmentDto, technicianId);
+    const userId = req.user.id;
+    return this.appointmentService.create(createAppointmentDto, userId);
   }
 
-  
   @Get()
   @UseGuards(AuthGuard, UserRoleGuard)
   @RoleProtected(ValidRoles.technician, ValidRoles.superUser)
@@ -37,7 +46,10 @@ export class AppointmentController {
   @Patch(':id')
   @UseGuards(AuthGuard, UserRoleGuard)
   @RoleProtected(ValidRoles.technician, ValidRoles.superUser)
-  update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAppointmentDto: UpdateAppointmentDto,
+  ) {
     return this.appointmentService.update(id, updateAppointmentDto);
   }
 
