@@ -25,6 +25,10 @@ export class UsersService {
     return this.userRepository.findOne({ where: { id } });
   }
 
+  update(id: string, updateUserDto: UpdateUserDto){
+    return this.userRepository.update(id, updateUserDto);
+  }
+
   async updateRating(id: string, updateUserDto: UpdateUserDto) {
     var inter={}
     const user=await this.userRepository.findOne({ where: { id } })

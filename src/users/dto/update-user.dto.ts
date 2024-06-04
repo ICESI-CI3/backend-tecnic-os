@@ -4,8 +4,18 @@ import { IsNumber, Max, Min } from 'class-validator';
 import { LargeNumberLike } from 'crypto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-    @IsNumber()
-    @Min(0)
-    @Max(5)
+
     rating: number;
+
+    id: string;
+
+    email: string;
+  
+    password: string;
+  
+    name: string;
+  
+    role: string[];
+
+    rates_cont: number;
 }

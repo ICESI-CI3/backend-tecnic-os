@@ -11,8 +11,8 @@ export class SeedController {
     constructor(private readonly seedService: SeedService) {}
 
     @Get()
-    @UseGuards(AuthGuard, UserRoleGuard)
-    @RoleProtected(ValidRoles.technician, ValidRoles.superUser)
+    //@UseGuards(AuthGuard, UserRoleGuard)
+    //@RoleProtected(ValidRoles.technician, ValidRoles.superUser)
     runSeed(){
         return this.seedService.populateDB();
     }

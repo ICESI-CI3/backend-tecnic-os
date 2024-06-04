@@ -34,11 +34,16 @@ export class UsersController {
     return this.usersService.findOneByID(id);
   }
 
+  @Patch('update/:id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
+  }
+
   @Patch('rating/:id')
   updateRating(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.updateRating(id, updateUserDto);
   }
-  
+
   @Patch('role/:id')
   updateRole(@Param('id') id: string, @Body() ChangeRoleDto: ChangeRoleDto) {
     console.log('ENTRO HP')
