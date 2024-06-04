@@ -1,14 +1,12 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateTechnicianDto } from './create-technician.dto';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class UpdateTechnicianDto extends PartialType(CreateTechnicianDto) {
-  @IsString()
+  @IsOptional()
   tags: string;
-
-  @IsString()
+  @IsOptional()
   description: string;
-
-  @IsNumber()
+  @IsOptional()
   minimum_fee: number;
 }
